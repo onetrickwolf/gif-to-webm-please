@@ -4,6 +4,7 @@ service: gif-to-webm-please
 
 frameworkVersion: '2'
 
+useDotenv: true
 
 provider:
   name: aws
