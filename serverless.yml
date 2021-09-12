@@ -13,6 +13,8 @@ provider:
 functions:
   api:
     handler: handler.handler
+    layers:
+      - ${env:FFMPEG_LAYER}
     events:
       - http:
           path: /
