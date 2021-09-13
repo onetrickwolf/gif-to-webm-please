@@ -9,7 +9,11 @@ useDotenv: true
 provider:
   name: aws
   runtime: nodejs14.x
+  timeout: 30
   lambdaHashingVersion: '20201221'
+  apiGateway:
+    binaryMediaTypes:
+      - 'video/webm'
 
 functions:
   api:
