@@ -1,6 +1,6 @@
 <!--
-title: 'Serverless Framework Node Express API on AWS'
-description: 'This template demonstrates how to develop and deploy a simple Node Express API running on AWS Lambda using the traditional Serverless Framework.'
+title: 'AWS Simple HTTP Endpoint example in NodeJS'
+description: 'This template demonstrates how to make a simple REST API with Node.js running on AWS Lambda and API Gateway using the traditional Serverless Framework.'
 layout: Doc
 framework: v2
 platform: AWS
@@ -11,37 +11,24 @@ authorName: 'Serverless, inc.'
 authorAvatar: 'https://avatars1.githubusercontent.com/u/13742415?s=200&v=4'
 -->
 
-# Serverless Framework Node Express API on AWS
+# Serverless Framework Node REST API on AWS
 
-This template demonstrates how to develop and deploy a simple Node Express API service running on AWS Lambda using the traditional Serverless Framework.
+This template demonstrates how to make a simple REST API with Node.js running on AWS Lambda and API Gateway using the traditional Serverless Framework.
 
-## Anatomy of the template
-
-This template configures a single function, `api`, which is responsible for handling all incoming requests thanks to configured `http` events. To learn more about `http` event configuration options, please refer to [http event docs](https://www.serverless.com/framework/docs/providers/aws/events/apigateway/). As the events are configured in a way to accept all incoming requests, `express` framework is responsible for routing and handling requests internally. Implementation takes advantage of `serverless-http` package, which allows you to wrap existing `express` applications. To learn more about `serverless-http`, please refer to corresponding [GitHub repository](https://github.com/dougmoscrop/serverless-http).
+This template does not include any kind of persistence (database). For a more advanced examples check out the [examples repo](https://github.com/serverless/examples/) which includes Typescript, Mongo, DynamoDB and other examples.
 
 ## Usage
 
 ### Deployment
 
-This example is made to work with the Serverless Framework dashboard, which includes advanced features such as CI/CD, monitoring, metrics, etc.
-
-In order to deploy with dashboard, you need to first login with:
+This example is made to work with the Serverless Framework dashboard which includes advanced features like CI/CD, monitoring, metrics, etc.
 
 ```
-serverless login
+$ serverless login
+$ serverless deploy
 ```
 
-install dependencies with:
-
-```
-npm install
-```
-
-and then perform deployment with:
-
-```
-serverless deploy
-```
+To deploy without the dashboard you will need to remove `org` and `app` fields from the `serverless.yml`, and you won’t have to run `sls login` before deploying.
 
 After running deploy, you should see output similar to:
 
@@ -54,25 +41,24 @@ Serverless: Checking Stack create progress...
 Serverless: Stack create finished...
 Serverless: Uploading CloudFormation file to S3...
 Serverless: Uploading artifacts...
-Serverless: Uploading service aws-node-express-api.zip file to S3 (711.23 KB)...
+Serverless: Uploading service aws-node-rest-api.zip file to S3 (711.23 KB)...
 Serverless: Validating template...
 Serverless: Updating Stack...
 Serverless: Checking Stack update progress...
 .................................
 Serverless: Stack update finished...
 Service Information
-service: aws-node-express-api
+service: aws-node-rest-api
 stage: dev
 region: us-east-1
-stack: aws-node-express-api-dev
+stack: aws-node-rest-api-dev
 resources: 12
 api keys:
   None
 endpoints:
   ANY - https://xxxxxxx.execute-api.us-east-1.amazonaws.com/dev/
-  ANY - https://xxxxxxx.execute-api.us-east-1.amazonaws.com/dev/{proxy+}
 functions:
-  api: aws-node-express-api-dev-api
+  api: aws-node-rest-api-dev-hello
 layers:
   None
 ```
@@ -87,39 +73,36 @@ After successful deployment, you can call the created application via HTTP:
 curl https://xxxxxxx.execute-api.us-east-1.amazonaws.com/dev/
 ```
 
-Which should result in the following response:
+Which should result in response similar to the following (removed `input` content for brevity):
 
-```
-{"message":"Hello from root!"}
-```
-
-Calling the `/hello` path with:
-
-```bash
-curl https://xxxxxxx.execute-api.us-east-1.amazonaws.com/dev/hello
-```
-
-Should result in the following response:
-
-```bash
-{"message":"Hello from path!"}
-```
-
-If you try to invoke a path or method that does not have a configured handler, e.g. with:
-
-```bash
-curl https://xxxxxxx.execute-api.us-east-1.amazonaws.com/dev/nonexistent
-```
-
-You should receive the following response:
-
-```bash
-{"error":"Not Found"}
+```json
+{
+  "message": "Go Serverless v2.0! Your function executed successfully!",
+  "input": {
+    ...
+  }
+}
 ```
 
 ### Local development
 
-It is also possible to emulate API Gateway and Lambda locally by using `serverless-offline` plugin. In order to do that, execute the following command:
+You can invoke your function locally by using the following command:
+
+```bash
+serverless invoke local --function hello
+```
+
+Which should result in response similar to the following:
+
+```
+{
+  "statusCode": 200,
+  "body": "{\n  \"message\": \"Go Serverless v2.0! Your function executed successfully!\",\n  \"input\": \"\"\n}"
+}
+```
+
+
+Alternatively, it is also possible to emulate API Gateway and Lambda locally by using `serverless-offline` plugin. In order to do that, execute the following command:
 
 ```bash
 serverless plugin install -n serverless-offline

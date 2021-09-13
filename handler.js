@@ -1,30 +1,19 @@
-const serverless = require("serverless-http");
-const express = require("express");
-const app = express();
-
+"use strict";
 const fs = require("fs");
 const https = require("https");
 const { spawnSync } = require("child_process");
 const { randomUUID } = require("crypto");
 
-app.get("/", (req, res, next) => {
-  return res.status(200).json({
-    message: "Hello from root!",
-  });
-});
-
-app.get("/hello", (req, res, next) => {
-  return res.status(200).json({
-    message: "Hello from path!",
-  });
-});
-
-app.get("/convert", (req, res, next) => {
-  if (!req.query.gif) {
-    return res.status(400).json({ error: "Required query params missing" });
+module.exports.gif2webm = async (event, context, callback) => {
+  if (!event.queryStringParameters.gif) {
+    callback(null, {
+      statusCode: 400,
+      headers: { "Content-Type": "text/plain" },
+      body: "Required query params missing.",
+    });
   }
   // let gif = 'https://static-cdn.jtvnw.net/emoticons/v2/emotesv2_447df256f3b1412b9fa0dfd3e9b6d84c/default/dark/3.0';
-  let gif = req.query.gif;
+  let gif = event.queryStringParameters.gif;
   let gif_path = `/tmp/${randomUUID()}.gif`;
   let webm_path = `/tmp/${randomUUID()}.webm`;
 
@@ -41,7 +30,11 @@ app.get("/convert", (req, res, next) => {
     })
     .on("error", (err) => {
       console.error(err.message);
-      return res.status(500).send(err.message);
+      callback(null, {
+        statusCode: err.statusCode || 500,
+        headers: { "Content-Type": "text/plain" },
+        body: err.message,
+      });
     });
 
   function convert() {
@@ -79,23 +72,14 @@ app.get("/convert", (req, res, next) => {
     );
 
     const image = fs.readFileSync(webm_path);
-
-    res.set({
-      "Content-Type": "video/webm",
-      "Access-Control-Allow-Headers": "Content-Type",
-      "Access-Control-Allow-Origin": "*",
-      "Access-Control-Allow-Methods": "OPTffmpegIONS,POST,GET",
+    const response = {
+      statusCode: 200,
+      headers: {
+        "Content-Type": "video/webm",
+      },
+      body: image.toString("base64"),
       isBase64Encoded: true,
-    });
-
-    return res.status(200).send(image.toString("base64"));
+    };
+    callback(null, response);
   }
-});
-
-app.use((req, res, next) => {
-  return res.status(404).json({
-    error: "Not Found",
-  });
-});
-
-module.exports.handler = serverless(app);
+};

@@ -16,14 +16,11 @@ provider:
       - 'video/webm'
 
 functions:
-  api:
-    handler: handler.handler
+  gif2webm:
+    handler: handler.gif2webm
     layers:
       - ${env:FFMPEG_LAYER}
     events:
       - http:
           path: /
-          method: ANY
-      - http:
-          path: /{proxy+}
-          method: ANY
+          method: get
