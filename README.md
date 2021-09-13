@@ -4,7 +4,7 @@
     <i>"Please turn into a less terrible file format..."</i>
 </p>
 
-# GIF to WebM Serverless Lambda API
+# GIF to WebM...please...
 
 Uses FFmpeg to convert animated GIFs to WebM video files on demand.
 
