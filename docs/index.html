@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Test</title>
+</head>
+<body>
+    <style>
+        img, video {
+            background: repeating-conic-gradient(#808080 0% 25%, transparent 0% 50%)
+            50% / 20px 20px
+        }
+        figure{
+            display: inline-block;
+        }
+        code {
+            background-color: #eee;
+            font-family: courier, monospace;
+            font-size:0.9em;
+        }
+    </style>
+
+    <h2><a href="https://github.com/onetrickwolf/gif-to-webm-please">gif-to-webm-please</a> Conversion Examples</h2>
+
+    <p>Uses the equivalent to this FFmpeg command: </p>
+    <pre><code>ffmpeg -i "DESKCHAN.gif" -c:v libvpx -qmin 0 -qmax 18 -crf 9 -b:v 1400K -quality good -cpu-used 0 -auto-alt-ref 0 -pix_fmt yuva420p -an -sn "DESKCHAN.webm"</code></pre>
+
+    <h3>DESKCHAN</h3>
+    <p>
+    <figure>
+        <img width="112" src="examples/DESKCHAN.gif" alt="feenPanic">
+        <figcaption>~66 KB (GIF)</figcaption>
+    </figure>
+    <figure>
+        <video width="112" src="examples/DESKCHAN.webm" loop autoplay></video>
+        <figcaption>~31 KB (WebM)</figcaption>
+    </figure>
+    </p>
+
+    <h3>catJAM</h3>
+    <p>
+        <figure>
+            <img width="112" src="examples/catJAM.gif" alt="catJAM">
+            <figcaption>~772 KB (GIF)</figcaption>
+        </figure>
+        <figure>
+            <video width="112" src="examples/catJAM.webm" loop autoplay></video>
+            <figcaption>~368 KB (WebM)</figcaption>
+        </figure>
+    </p>
+
+    <h3>feenPanic</h3>
+    <p>
+    <figure>
+        <img width="112" src="examples/feenPanic.gif" alt="feenPanic">
+        <figcaption>~336 KB (GIF)</figcaption>
+    </figure>
+    <figure>
+        <video width="112" src="examples/feenPanic.webm" loop autoplay></video>
+        <figcaption>~117 KB (WebM)</figcaption>
+    </figure>
+    </p>
+
+    <h3>feenExit (last frame delay issue on WebM)</h3>
+    <p>
+    <figure>
+        <img width="112" src="examples/feenExit.gif" alt="feenPanic">
+        <figcaption>~69<sub style="font-size:0.5em">nice</sub> KB (GIF)</figcaption>
+    </figure>
+    <figure>
+        <video width="112" src="examples/feenExit.webm" loop autoplay></video>
+        <figcaption>~15 KB (WebM)</figcaption>
+    </figure>
+    </p>
+</body>
+</html>

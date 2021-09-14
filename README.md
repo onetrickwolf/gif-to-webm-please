@@ -27,6 +27,8 @@ emotes.
 - Delay on the last frame gets dropped. This can cause the loop timing of some animations to be off. This is
   a [known issue with FFMPEG.](https://trac.ffmpeg.org/ticket/6294#comment:6) Working on implementing fix for next
   release.
+- Would like to increase quality of conversion but for some reason ran into timing issues with [lossless libvpx](https://trac.ffmpeg.org/wiki/Encode/VP9#LosslessVP9) or even when just increasing the quality paramaters 
+  significantly. It's still pretty good but definitely could take some time to fine tune it.
 
 ### Roadmap
 
