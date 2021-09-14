@@ -13,7 +13,7 @@ provider:
   lambdaHashingVersion: '20201221'
   apiGateway:
     binaryMediaTypes:
-      - 'video/webm'
+      - '*/*'
 
 functions:
   gif2webm:

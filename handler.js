@@ -4,16 +4,16 @@ const https = require("https");
 const { spawnSync } = require("child_process");
 const { randomUUID } = require("crypto");
 
-module.exports.gif2webm = async (event, context, callback) => {
-  if (!event.queryStringParameters.gif) {
-    callback(null, {
+module.exports.gif2webm = (event, context, callback) => {
+  // let gif = 'https://static-cdn.jtvnw.net/emoticons/v2/emotesv2_447df256f3b1412b9fa0dfd3e9b6d84c/default/dark/3.0';
+  let gif = event.queryStringParameters?.gif;
+  if (gif === undefined) {
+    return {
       statusCode: 400,
       headers: { "Content-Type": "text/plain" },
       body: "Required query params missing.",
-    });
+    };
   }
-  // let gif = 'https://static-cdn.jtvnw.net/emoticons/v2/emotesv2_447df256f3b1412b9fa0dfd3e9b6d84c/default/dark/3.0';
-  let gif = event.queryStringParameters.gif;
   let gif_path = `/tmp/${randomUUID()}.gif`;
   let webm_path = `/tmp/${randomUUID()}.webm`;
 
@@ -30,11 +30,11 @@ module.exports.gif2webm = async (event, context, callback) => {
     })
     .on("error", (err) => {
       console.error(err.message);
-      callback(null, {
+      return {
         statusCode: err.statusCode || 500,
         headers: { "Content-Type": "text/plain" },
         body: err.message,
-      });
+      };
     });
 
   function convert() {
