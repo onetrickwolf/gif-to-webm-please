@@ -34,7 +34,7 @@ emotes.
 
 - Would like to eventually implemented this with [FFmpeg WASM](https://github.com/ffmpegwasm/ffmpeg.wasm) as well so
   conversion can be done completely in browser.
-- Add caching to cache previously requested URLs.
+- Add caching to cache previously requested URLs [most likely with CloudFront](https://aws.amazon.com/blogs/networking-and-content-delivery/resizing-images-with-amazon-cloudfront-lambdaedge-aws-cdn-blog/).
 - I plan to restrict public API to only convert URLs from Twitch and BTTV to prevent general usage making my AWS 
   bill go crazy
 
