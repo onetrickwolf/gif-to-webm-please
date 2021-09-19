@@ -116,6 +116,7 @@ module.exports.gif2webm = async (event, context, callback) => {
         statusCode: 200,
         headers: {
           "Content-Type": "video/webm",
+          "Access-Control-Allow-Origin": "*",
         },
         body: image.toString("base64"),
         isBase64Encoded: true,
