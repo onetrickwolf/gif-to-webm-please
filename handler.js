@@ -18,6 +18,7 @@ module.exports.gif2webm = async (event, context, callback) => {
   let webm_path = `/tmp/${randomUUID()}.webm`;
 
   // TODO: making https.get a promise within a lambda sucks, was trying avoid libraries but this could be easier to read
+  // TODO: open up cors for every response
 
   const promise = new Promise(function (resolve, reject) {
     https
@@ -103,6 +104,8 @@ module.exports.gif2webm = async (event, context, callback) => {
         "yuva420p",
         "-an",
         "-sn",
+        "-vsync",
+        "cfr",
         webm_path,
       ],
       {

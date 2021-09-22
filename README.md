@@ -16,24 +16,15 @@ Configured for [AWS Lambda](https://aws.amazon.com/lambda/) using the [Serverles
 - WebMs can massively reduce file size.
 - Generally more performant than existing methods of parsing and loading GIFs as textures.
 
-[//]: # (TODO: insert gif webm comparison)
-
 I specifically made this API in order to dynamically load Twitch and BTTV animated emotes into PixiJS for streamer
 overlays. There were some existing methods but the performance generally suffered when trying to load thousands of
 emotes.
 
-### Known Issues
-
-- Delay on the last frame gets dropped. This can cause the loop timing of some animations to be off. This is
-  a [known issue with FFMPEG.](https://trac.ffmpeg.org/ticket/6294#comment:6) Working on implementing fix for next
-  release.
-- Would like to increase quality of conversion but for some reason ran into timing issues with [lossless libvpx](https://trac.ffmpeg.org/wiki/Encode/VP9#LosslessVP9) or even when just increasing the quality paramaters 
-  significantly. It's still pretty good but definitely could take some time to fine tune it.
-
 ### Roadmap
 
 - Would like to eventually implemented this with [FFmpeg WASM](https://github.com/ffmpegwasm/ffmpeg.wasm) as well so
-  conversion can be done completely in browser.
+  conversion can be done completely in browser. FFmpeh WASM only works with Chromium 79 and above though and OBS is 
+  currently still on Chromium 75.
 - Add caching to cache previously requested URLs [most likely with CloudFront](https://aws.amazon.com/blogs/networking-and-content-delivery/resizing-images-with-amazon-cloudfront-lambdaedge-aws-cdn-blog/).
 - I plan to restrict public API to only convert URLs from Twitch and BTTV to prevent general usage making my AWS 
   bill go crazy
