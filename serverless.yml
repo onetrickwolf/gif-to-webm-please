@@ -9,7 +9,7 @@ useDotenv: true
 provider:
   name: aws
   runtime: nodejs14.x
-  timeout: 30
+  timeout: 60
   lambdaHashingVersion: '20201221'
   apiGateway:
     binaryMediaTypes:
